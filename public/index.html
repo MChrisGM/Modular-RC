@@ -41,17 +41,18 @@
 
     <script>
         function rotateImageClockWise() {
-            event.srcElement.style.transform = 'rotate(90deg)';
+            let feed = document.getElementById("feed_src");
+            feed.style.transform = 'rotate(90deg)';
         }
     </script>
 </head>
 
 <body>
     <div id="feed">
-        <img src="stream.mjpg">
+        <img id="feed_src" src="stream.mjpg">
     </div>
     <div id="settings">
-        <button onclick="rotateImageClockWise(this)">Rotate</button>
+        <button onclick="rotateImageClockWise()">Rotate</button>
     </div>
 
 </body>
