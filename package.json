@@ -1,0 +1,24 @@
+{
+  "name": "modular-rc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MChrisGM/Modular-RC.git"
+  },
+  "author": "Christos Ioannidis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MChrisGM/Modular-RC/issues"
+  },
+  "homepage": "https://github.com/MChrisGM/Modular-RC#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "onoff": "^6.0.3",
+    "socket.io": "^4.5.4"
+  }
+}
