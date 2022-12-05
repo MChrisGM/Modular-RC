@@ -1,5 +1,5 @@
 const express = require('express')
-const videoStream = require('raspberrypi-node-camera-web-streamer');
+const videoStream = require('./videoStream');
 const fs = require('fs');
 const localtunnel = require('localtunnel');
 
@@ -8,7 +8,7 @@ const app = express();
 PORT = 3000;
 
 (async () => {
-  const tunnel = await localtunnel({ PORT: 3000, subdomain:'f1rc' });
+  const tunnel = await localtunnel(PORT, {subdomain:'f1rc' });
   console.log(tunnel.url);
   tunnel.on('close', () => {
     // tunnels are closed
