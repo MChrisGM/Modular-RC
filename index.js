@@ -16,9 +16,9 @@ PORT = 3000;
 })();
 
 videoStream.acceptConnections(app, {
-  width: 960,
-  height: 720,
-  fps: 30,
+  width: 800,
+  height: 600,
+  fps: 24,
   encoding: 'JPEG',
   quality: 6 //lower is faster
 }, '/stream.mjpg', false);
