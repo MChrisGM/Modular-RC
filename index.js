@@ -8,7 +8,7 @@ const app = express();
 PORT = 3000;
 
 (async () => {
-  const tunnel = await localtunnel(PORT, {subdomain:'f1rc' });
+  const tunnel = await localtunnel(PORT, { subdomain: 'cuf1rc' });
   console.log(tunnel.url);
   tunnel.on('close', () => {
     // tunnels are closed
@@ -16,13 +16,13 @@ PORT = 3000;
 })();
 
 videoStream.acceptConnections(app, {
-    width: 960,
-    height: 720,
-    fps: 30,
-    encoding: 'JPEG',
-    quality: 4 //lower is faster
+  width: 960,
+  height: 720,
+  fps: 30,
+  encoding: 'JPEG',
+  quality: 4 //lower is faster
 }, '/stream.mjpg', false);
 
 
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname + '/public'));
 app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
