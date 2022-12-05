@@ -17,6 +17,14 @@
             max-height: 100%;
         }
 
+        #settings {
+            position: absolute;
+            display: block;
+            top: 0%;
+            left: 0%;
+            margin: 5px;
+        }
+
         img {
             max-width: 100%;
             max-height: 100%;
@@ -30,11 +38,21 @@
             object-fit: contain;
         }
     </style>
+
+    <script>
+        function rotateImageClockWise(e) {
+            // var myImage = document.getElementById("myImage");
+            e.target.style.transform = 'rotate(90deg)';
+        }
+    </script>
 </head>
 
 <body>
     <div id="feed">
         <img src="stream.mjpg">
+    </div>
+    <div id="settings">
+        <button onclick="rotateImageClockWise()">Rotate</button>
     </div>
 
 </body>
