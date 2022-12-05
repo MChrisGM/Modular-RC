@@ -40,9 +40,11 @@
     </style>
 
     <script>
+        let rotation = 0;
         function rotateImageClockWise() {
             let feed = document.getElementById("feed_src");
-            feed.style.transform = 'rotate(90deg)';
+            rotation = (rotation + 90) % 360;
+            feed.style.transform = `rotate(${rotation}deg)`;
         }
     </script>
 </head>
