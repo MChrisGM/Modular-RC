@@ -13,8 +13,6 @@ var server = app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 
 var io = require('socket.io')(server);
 
-
-
 (async () => {
     const tunnel = await localtunnel(PORT, { subdomain: 'cuf1rc' });
     console.log(tunnel.url);
@@ -31,19 +29,34 @@ videoStream.acceptConnections(app, {
     quality: 6 //lower is faster
 }, '/stream.mjpg', false);
 
+function throttle(){
+
+}
+
+function brake(){
+
+}
+
+function steering(){
+
+}
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('th', (value)=>{
-        console.log("Throttle: ",value);
+        // console.log("Throttle: ",value);
+        throttle(value);
     });
 
     socket.on('br', (value)=>{
-        console.log("Brake: ",value);
+        // console.log("Brake: ",value);
+        brake(value);
     });
 
     socket.on('st', (value)=>{
-        console.log("Steering: ",value);
+        // console.log("Steering: ",value);
+        steering(value);
     });
 
     socket.on('disconnect', () => {
