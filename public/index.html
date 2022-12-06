@@ -27,11 +27,24 @@
         <hr>
         <form action="#">
             <label for="controllers">Controller:</label>
+            <br>
             <select name="controllers" id="controllers">
             </select>
+            <br>
             <input type="button" onclick="selectController();" value="Select controller" />
         </form>
         <hr>
+        <form action="#">
+            <label for="binds">Controls:</label>
+            <br>
+            <select name="binds" id="binds">
+                <option value="steer">Steering</option>
+                <option value="throttle">Throttle</option>
+                <option value="brake">Brake</option>
+            </select>
+            <br>
+            <input type="button" onclick="bindAction();" value="Bind" />
+        </form>
     </div>
 </body>
 

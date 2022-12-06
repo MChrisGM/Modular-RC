@@ -14,7 +14,16 @@ body {
 }
 
 #settings {
-    position: absolute;
+    position: relative;
+    display: block;
+    top: 0%;
+    left: 0%;
+    margin: 5px;
+    max-width: 10vw;
+}
+
+#controls{
+    position: relative;
     display: block;
     top: 0%;
     left: 0%;

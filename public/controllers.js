@@ -18,8 +18,34 @@ var controller_options = {};
 var cont_select_el;
 var GamePad;
 
+function throttle(value){
+    console.log('Throttle: ',value);
+}
+function brake(value){
+    console.log('Brake: ',value);
+}
+function steering(value){
+    console.log('Steering: ',value);
+}
+
+const bind_map = {
+    "steer":steering,
+    "throttle":throttle,
+    "brake":brake
+};
+
+
 function selectController(){
-    GamePad = new Pad(controllers[cont_select_el.value]);
+    GamePad = new Pad(controllers[cont_select_el.value], 0.1);
+}
+
+async function bindAction(){
+    console.log('Ready to bind');
+    const bind_selection = document.getElementById("binds").value;
+    let b = await GamePad.getFirstInput();
+    await GamePad.bind(b, function(value){
+        bind_map[bind_selection](value);
+    });
 }
 
 function connecthandler(e) {
@@ -77,9 +103,9 @@ window.onload = function () {
         setInterval(scangamepads, 500);
     }
     setInterval(function(){
-        GamePad.update(controllers[cont_select_el.value]);
         if(GamePad.exists()){
-            GamePad.updateInputs();
+            GamePad.update(controllers[cont_select_el.value]);
+            GamePad.runInputs();
         }
     },100);
 }
