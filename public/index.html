@@ -2,42 +2,9 @@
 
 <head>
     <title>F1 - RC Car</title>
-    <style>
-        body {
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-            bottom: 0px;
-            background: #111;
-        }
 
-        #feed {
-            max-width: 100%;
-            max-height: 100%;
-        }
-
-        #settings {
-            position: absolute;
-            display: block;
-            top: 0%;
-            left: 0%;
-            margin: 5px;
-        }
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            right: 0px;
-            height: 100%;
-            width: calc(100% + 2px);
-            object-fit: contain;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="controller.js"></script>
 
     <script>
         let rotation = 0;
@@ -55,8 +22,13 @@
     </div>
     <div id="settings">
         <button onclick="rotateImageClockWise()">Rotate</button>
+        <form action="#">
+            <label for="controllers">Controller:</label>
+            <select name="controllers" id="controllers">
+            </select>
+            <input type="button" onclick="selectController();" value="Select"/>
+          </form>
     </div>
-
 </body>
 
 </html>
