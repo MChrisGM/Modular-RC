@@ -7,9 +7,18 @@ const app = express();
 
 PORT = 3000;
 
+let VEHICLE = {
+  throttle_pct: 0,
+  brake_pct: 0,
+  steering_ang:0
+};
+
 app.use(express.static(__dirname + '/public'));
 
-var server = app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
+var server = app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}!`);
+  
+});
 
 var io = require('socket.io')(server);
 
@@ -29,16 +38,16 @@ videoStream.acceptConnections(app, {
     quality: 6 //lower is faster
 }, '/stream.mjpg', false);
 
-function throttle(){
-
+function throttle(val){
+  VEHICLE.throttle_pct = val;
 }
 
-function brake(){
-
+function brake(val){
+  VEHICLE.brake_pct = val;
 }
 
-function steering(){
-
+function steering(val){
+  VEHICLE.steering_ang = val;
 }
 
 io.on('connection', (socket) => {
