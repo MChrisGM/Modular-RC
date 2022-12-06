@@ -3,10 +3,13 @@ const videoStream = require('./videoStream');
 const fs = require('fs');
 const localtunnel = require('localtunnel');
 
-const { Server } = require("socket.io");
-const io = new Server(server);
-
 const app = express();
+
+app.use(express.static(__dirname + '/public'));
+
+var server = app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
+
+var io = require('socket.io')(server);
 
 PORT = 3000;
 
@@ -25,10 +28,6 @@ videoStream.acceptConnections(app, {
     encoding: 'JPEG',
     quality: 6 //lower is faster
 }, '/stream.mjpg', false);
-
-
-app.use(express.static(__dirname + '/public'));
-app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 
 io.on('connection', (socket) => {
     console.log('a user connected');
