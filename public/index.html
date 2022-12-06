@@ -4,11 +4,14 @@
     <title>F1 - RC Car</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="socket.io.min.js"></script>
     <script src="pad.js"></script>
     <script src="controllers.js"></script>
     
 
     <script>
+        const socket = io();
+        
         let rotation = 0;
         function rotateImageClockWise() {
             let feed = document.getElementById("feed_src");

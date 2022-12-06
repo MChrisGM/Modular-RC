@@ -4,7 +4,7 @@ const AXIS = "axs";
 class Pad {
     constructor(gamepad, deadzone) {
         self.gamepad = gamepad;
-        self.binds = { "btn": {}, "axs": {} };
+        self.binds = { [BUTTON]: {}, [AXIS]: {} };
         self.deadzone = deadzone;
     }
     update(gamepad) {

@@ -1,12 +1,3 @@
-/*
- * Gamepad API Test
- * Written in 2013 by Ted Mielczarek <ted@mielczarek.org>
- *
- * To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
- *
- * You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
- */
-
 var haveEvents = 'GamepadEvent' in window;
 var haveWebkitEvents = 'WebKitGamepadEvent' in window;
 var controllers = {};
@@ -20,12 +11,15 @@ var GamePad;
 
 function throttle(value){
     console.log('Throttle: ',value);
+    socket.emit("th", { v: value });
 }
 function brake(value){
     console.log('Brake: ',value);
+    socket.emit("br", { v: value });
 }
 function steering(value){
     console.log('Steering: ',value);
+    socket.emit("st", { v: value });
 }
 
 const bind_map = {
@@ -33,7 +27,6 @@ const bind_map = {
     "throttle":throttle,
     "brake":brake
 };
-
 
 function selectController(){
     GamePad = new Pad(controllers[cont_select_el.value], 0.1);
@@ -103,7 +96,7 @@ window.onload = function () {
         setInterval(scangamepads, 500);
     }
     setInterval(function(){
-        if(GamePad.exists()){
+        if(GamePad && GamePad.exists()){
             GamePad.update(controllers[cont_select_el.value]);
             GamePad.runInputs();
         }
