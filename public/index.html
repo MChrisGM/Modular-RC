@@ -4,7 +4,9 @@
     <title>F1 - RC Car</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="controller.js"></script>
+    <script src="pad.js"></script>
+    <script src="controllers.js"></script>
+    
 
     <script>
         let rotation = 0;
@@ -21,13 +23,15 @@
         <img id="feed_src" src="stream.mjpg">
     </div>
     <div id="settings">
-        <button onclick="rotateImageClockWise()">Rotate</button>
+        <button onclick="rotateImageClockWise()">Rotate Feed</button>
+        <hr>
         <form action="#">
             <label for="controllers">Controller:</label>
             <select name="controllers" id="controllers">
             </select>
-            <input type="button" onclick="selectController();" value="Select"/>
-          </form>
+            <input type="button" onclick="selectController();" value="Select controller" />
+        </form>
+        <hr>
     </div>
 </body>
 

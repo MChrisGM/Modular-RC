@@ -16,9 +16,10 @@ var rAF = window.mozRequestAnimationFrame ||
 
 var controller_options = {};
 var cont_select_el;
+var GamePad;
 
 function selectController(){
-    console.log(controllers[cont_select_el.value]);
+    GamePad = new Pad(controllers[cont_select_el.value]);
 }
 
 function connecthandler(e) {
@@ -41,52 +42,16 @@ function updateStatus() {
     scangamepads();
     for (j in controllers) {
         var controller = controllers[j];
-
         controller_options[controller.index] = document.createElement('option');
         controller_options[controller.index].value = controller.index;
-        controller_options[controller.index].innerHTML = controller.id;
-
-        // var d = document.getElementById("controller" + j);
-        // var buttons = d.getElementsByClassName("button");
-        for (var i = 0; i < controller.buttons.length; i++) {
-            //   var b = buttons[i];
-            var val = controller.buttons[i];
-            var pressed = val == 1.0;
-            var touched = false;
-            if (typeof (val) == "object") {
-                pressed = val.pressed;
-                if ('touched' in val) {
-                    touched = val.touched;
-                }
-                val = val.value;
-            }
-            var pct = Math.round(val * 100) + "%";
-            //   b.style.backgroundSize = pct + " " + pct;
-            //   b.className = "button";
-            if (pressed) {
-                // b.className += " pressed";
-            }
-            if (touched) {
-                // b.className += " touched";
-            }
-        }
-
-        // var axes = d.getElementsByClassName("axis");
-        for (var i = 0; i < controller.axes.length; i++) {
-            //   var a = axes[i];
-            //   a.innerHTML = i + ": " + controller.axes[i].toFixed(4);
-            //   a.setAttribute("value", controller.axes[i]);
-        }
+        controller_options[controller.index].innerHTML = controller.id;        
     }
-
-
     for (i in controller_options) {
         var values = Array.from(cont_select_el.options).map(e => e.value);
         if(!values.includes(i)){
             cont_select_el.appendChild(controller_options[i]);
         }
     }
-
     rAF(updateStatus);
 }
 
@@ -97,7 +62,6 @@ function scangamepads() {
             controllers[gamepads[i].index] = gamepads[i];
         }
     }
-    // console.log(controllers);
 }
 
 window.onload = function () {
@@ -112,4 +76,10 @@ window.onload = function () {
     } else {
         setInterval(scangamepads, 500);
     }
+    setInterval(function(){
+        GamePad.update(controllers[cont_select_el.value]);
+        if(GamePad.exists()){
+            GamePad.updateInputs();
+        }
+    },100);
 }
