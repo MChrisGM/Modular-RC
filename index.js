@@ -5,13 +5,15 @@ const localtunnel = require('localtunnel');
 
 const app = express();
 
+PORT = 3000;
+
 app.use(express.static(__dirname + '/public'));
 
 var server = app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 
 var io = require('socket.io')(server);
 
-PORT = 3000;
+
 
 (async () => {
     const tunnel = await localtunnel(PORT, { subdomain: 'cuf1rc' });
