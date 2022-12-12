@@ -39,36 +39,42 @@ videoStream.acceptConnections(app, {
 }, '/stream.mjpg', false);
 
 function throttle(val){
+  if(val != VEHICLE.throttle_pct){
+    console.log("Throttle: ",val);
+  }
   VEHICLE.throttle_pct = val;
 }
 
 function brake(val){
+  if(val != VEHICLE.brake_pct){
+    console.log("Brake: ",val);
+  }
   VEHICLE.brake_pct = val;
 }
 
 function steering(val){
+  if(val != VEHICLE.steering_ang){
+    console.log("Steering angle: ",val);
+  }
   VEHICLE.steering_ang = val;
 }
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log(socket.id,' connected');
 
     socket.on('th', (value)=>{
-        // console.log("Throttle: ",value);
         throttle(value);
     });
 
     socket.on('br', (value)=>{
-        // console.log("Brake: ",value);
         brake(value);
     });
 
     socket.on('st', (value)=>{
-        // console.log("Steering: ",value);
         steering(value);
     });
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log(socket.id,' disconnected');
     });
 });
