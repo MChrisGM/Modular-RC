@@ -43,22 +43,22 @@ videoStream.acceptConnections(app, {
 }, '/stream.mjpg', false);
 
 function throttle(val){
-  if(val != VEHICLE.throttle_pct){
-    console.log("Throttle: ",val);
+  if(val.v != VEHICLE.throttle_pct){
+    console.log("Throttle: ",val.v);
   }
   VEHICLE.throttle_pct = val.v;
 }
 
 function brake(val){
-  if(val != VEHICLE.brake_pct){
-    console.log("Brake: ",val);
+  if(val.v != VEHICLE.brake_pct){
+    console.log("Brake: ",val.v);
   }
   VEHICLE.brake_pct = val.v;
 }
 
 function steering(val){
-  if(val != VEHICLE.steering_ang){
-    console.log("Steering angle: ",val);
+  if(val.v != VEHICLE.steering_ang){
+    console.log("Steering angle: ",val.v);
   }
   VEHICLE.steering_ang = val.v;
 }
@@ -92,5 +92,5 @@ function main(){
   
   piblaster.setServoPwm("P1-11", scale(VEHICLE.steering_ang,-1,1,0,100) + "%");
 
-  
+
 }
