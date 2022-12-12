@@ -2,10 +2,14 @@ const express = require('express')
 const videoStream = require('./videoStream');
 const fs = require('fs');
 const localtunnel = require('localtunnel');
+var piblaster = require('pi-servo-blaster.js'); 
 
 const app = express();
 
 PORT = 3000;
+
+var curAngle = 0;
+var direction = 1;
 
 let VEHICLE = {
   throttle_pct: 0,
@@ -17,7 +21,7 @@ app.use(express.static(__dirname + '/public'));
 
 var server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
-  
+  setInterval(function(){main()}, 10);
 });
 
 var io = require('socket.io')(server);
@@ -42,21 +46,21 @@ function throttle(val){
   if(val != VEHICLE.throttle_pct){
     console.log("Throttle: ",val);
   }
-  VEHICLE.throttle_pct = val;
+  VEHICLE.throttle_pct = val.v;
 }
 
 function brake(val){
   if(val != VEHICLE.brake_pct){
     console.log("Brake: ",val);
   }
-  VEHICLE.brake_pct = val;
+  VEHICLE.brake_pct = val.v;
 }
 
 function steering(val){
   if(val != VEHICLE.steering_ang){
     console.log("Steering angle: ",val);
   }
-  VEHICLE.steering_ang = val;
+  VEHICLE.steering_ang = val.v;
 }
 
 io.on('connection', (socket) => {
@@ -78,3 +82,15 @@ io.on('connection', (socket) => {
         console.log(socket.id,' disconnected');
     });
 });
+
+function scale (number, inMin, inMax, outMin, outMax) {
+  return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+
+
+function main(){
+  
+  piblaster.setServoPwm("P1-11", scale(VEHICLE.steering_ang,-1,1,0,100) + "%");
+
+  
+}

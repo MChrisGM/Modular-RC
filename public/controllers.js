@@ -29,15 +29,17 @@ const bind_map = {
 };
 
 function selectController(){
-    GamePad = new Pad(controllers[cont_select_el.value], 0.1);
+    GamePad = new Pad(controllers[cont_select_el.value], 0.05);
 }
 
 async function bindAction(){
     console.log('Ready to bind');
     const bind_selection = document.getElementById("binds").value;
+    document.getElementById("bind_btn").value = "Binding "+bind_selection;
     let b = await GamePad.getFirstInput();
     await GamePad.bind(b, function(value){
         bind_map[bind_selection](value);
+        document.getElementById("bind_btn").value = "Bind";
     });
 }
 
