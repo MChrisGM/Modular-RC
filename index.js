@@ -96,8 +96,14 @@ function main(){
   
   piblaster.setServoPwm(ServoPin, scale(VEHICLE.steering_ang,-1,1,0,100) + "%");
 
-  Motor1A.digitalWrite(1);
-  Motor1B.digitalWrite(0);
+  if(VEHICLE.throttle_pct>0){
+    Motor1A.digitalWrite(1);
+    Motor1B.digitalWrite(0);
+  }
+  else{
+    Motor1A.digitalWrite(0);
+    Motor1B.digitalWrite(0);
+  }
   // Motor1E.digitalWrite(1);
 
   let speed = Math.round((VEHICLE.throttle_pct/100)*255);
