@@ -29,7 +29,7 @@ const bind_map = {
 };
 
 function selectController(){
-    GamePad = new Pad(controllers[cont_select_el.value], 0.05);
+    GamePad = new Pad(controllers[cont_select_el.value], 0);
 }
 
 async function bindAction(){
