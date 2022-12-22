@@ -8,9 +8,6 @@ const app = express();
 
 PORT = 3000;
 
-var curAngle = 0;
-var direction = 1;
-
 let VEHICLE = {
   throttle_pct: 0,
   brake_pct: 0,
