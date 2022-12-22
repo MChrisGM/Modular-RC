@@ -101,7 +101,7 @@ function main(){
   Motor1E.digitalWrite(1);
 
   let speed = Math.round((VEHICLE.throttle_pct/100)*255);
-  console.log("Motor speed:" , speed);
+  // console.log("Motor speed:" , speed);
   Motor1E.pwmWrite(speed);
 
 }
