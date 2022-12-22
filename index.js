@@ -11,7 +11,7 @@ PORT = 3000;
 
 const Motor1A = new Gpio(24, {mode: Gpio.OUTPUT}); //Pin 18
 const Motor1B = new Gpio(23, {mode: Gpio.OUTPUT}); //Pin 16
-const Motor1E = new Gpio(25, {mode: Gpio.OUTPUT}); //Pin 22
+const Motor1E = new Gpio(18, {mode: Gpio.OUTPUT}); //Pin 12
 
 const ServoPin = "P1-11";
 
@@ -48,21 +48,21 @@ videoStream.acceptConnections(app, {
 
 function throttle(val){
   if(val.v != VEHICLE.throttle_pct){
-    console.log("Throttle: ",val.v);
+    // console.log("Throttle: ",val.v);
   }
   VEHICLE.throttle_pct = val.v;
 }
 
 function brake(val){
   if(val.v != VEHICLE.brake_pct){
-    console.log("Brake: ",val.v);
+    // console.log("Brake: ",val.v);
   }
   VEHICLE.brake_pct = val.v;
 }
 
 function steering(val){
   if(val.v != VEHICLE.steering_ang){
-    console.log("Steering angle: ",val.v);
+    // console.log("Steering angle: ",val.v);
   }
   VEHICLE.steering_ang = val.v;
 }
@@ -100,7 +100,7 @@ function main(){
   Motor1B.digitalWrite(0);
   Motor1E.digitalWrite(1);
 
-  let speed = (VEHICLE.throttle_pct);
+  let speed = (VEHICLE.throttle_pct/100)*255;
   console.log("Motor speed:" , speed);
   Motor1E.pwmWrite(speed);
 
