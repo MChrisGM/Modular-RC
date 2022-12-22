@@ -2,11 +2,18 @@ const express = require('express')
 const videoStream = require('./videoStream');
 const fs = require('fs');
 const localtunnel = require('localtunnel');
-var piblaster = require('pi-servo-blaster.js'); 
+var piblaster = require('pi-servo-blaster.js');
+const Gpio = require('pigpio').Gpio;
 
 const app = express();
 
 PORT = 3000;
+
+const Motor1A = new Gpio(24, {mode: Gpio.OUTPUT}); //Pin 18
+const Motor1B = new Gpio(23, {mode: Gpio.OUTPUT}); //Pin 16
+const Motor1E = new Gpio(25, {mode: Gpio.OUTPUT}); //Pin 22
+
+const ServoPin = "P1-11";
 
 let VEHICLE = {
   throttle_pct: 0,
@@ -87,7 +94,14 @@ function scale (number, inMin, inMax, outMin, outMax) {
 
 function main(){
   
-  piblaster.setServoPwm("P1-11", scale(VEHICLE.steering_ang,-1,1,0,100) + "%");
+  piblaster.setServoPwm(ServoPin, scale(VEHICLE.steering_ang,-1,1,0,100) + "%");
 
+  Motor1A.digitalWrite(1);
+  Motor1B.digitalWrite(0);
+  Motor1E.digitalWrite(1);
+
+  let speed = (VEHICLE.throttle_pct);
+  console.log("Motor speed:" , speed);
+  Motor1E.pwmWrite(speed);
 
 }
