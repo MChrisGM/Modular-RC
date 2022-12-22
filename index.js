@@ -96,7 +96,7 @@ function main(){
   
   piblaster.setServoPwm(ServoPin, scale(VEHICLE.steering_ang,-1,1,0,100) + "%");
 
-  if(VEHICLE.throttle_pct>0){
+  if(VEHICLE.throttle_pct>45){
     Motor1A.digitalWrite(1);
     Motor1B.digitalWrite(0);
   }
