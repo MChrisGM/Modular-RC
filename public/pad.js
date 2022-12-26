@@ -3,15 +3,16 @@ const AXIS = "axs";
 
 class Pad {
     constructor(gamepad, deadzone) {
-        self.gamepad = gamepad;
-        self.binds = { [BUTTON]: {}, [AXIS]: {} };
-        self.deadzone = deadzone;
+        this.gamepad = gamepad;
+        this.binds = { [BUTTON]: {}, [AXIS]: {} };
+        this.deadzone = deadzone;
+        this.binded = {[BUTTON]: [] , [AXIS]: []};
     }
     update(gamepad) {
-        self.gamepad = gamepad;
+        this.gamepad = gamepad;
     }
     exists() {
-        if (self.gamepad != null) {
+        if (this.gamepad != null) {
             return true;
         } else {
             return false;
@@ -21,6 +22,8 @@ class Pad {
         let gotInput = false;
         let btn_id = null;
         let axis_id = null;
+
+        let self = this;
 
         let promise = new Promise(function (resolve, reject) {
             setInterval(function () {
@@ -37,20 +40,26 @@ class Pad {
                             val = val.value;
                         }
                         if (pressed) {
-                            gotInput = true;
-                            btn_id = i;
-                            resolve({ type: BUTTON, id: btn_id });
-                            break;
+                            if(!self.binded[BUTTON].includes(i)){
+                                gotInput = true;
+                                btn_id = i;
+                                self.binded[BUTTON].push(i);
+                                resolve({ type: BUTTON, id: btn_id });
+                                break;
+                            }
                         }
                     }
                 }
                 for (var i = 0; i < self.gamepad.axes.length; i++) {
                     if (!gotInput) {
-                        if (Math.abs(self.gamepad.axes[i]) > 0.9) {
-                            gotInput = true;
-                            axis_id = i
-                            resolve({ type: AXIS, id: axis_id });
-                            break;
+                        if(!self.binded[AXIS].includes(i)){
+                            if (Math.abs(self.gamepad.axes[i]) > 0.9) {
+                                gotInput = true;
+                                axis_id = i
+                                self.binded[AXIS].push(i);
+                                resolve({ type: AXIS, id: axis_id });
+                                break;
+                            }
                         }
                     }
                 }
@@ -61,11 +70,11 @@ class Pad {
 
     async bind(b, callback) {
         console.log("Binding button: ", b);
-        self.binds[b.type][b.id] = callback;
+        this.binds[b.type][b.id] = callback;
     }
     runInputs() {
-        for (i in self.binds[BUTTON]) {
-            var val = self.gamepad.buttons[i];
+        for (i in this.binds[BUTTON]) {
+            var val = this.gamepad.buttons[i];
             var pressed = val == 1.0;
             var touched = false;
             if (typeof (val) == "object") {
@@ -77,12 +86,12 @@ class Pad {
             }
             var pct = Math.round(val * 100);
             if (pressed) {
-                self.binds[BUTTON][i](pct);
+                this.binds[BUTTON][i](pct);
             }
         }
-        for (i in self.binds[AXIS]) {
-            if (Math.abs(self.gamepad.axes[i]) > self.deadzone) {
-                self.binds[AXIS][i](self.gamepad.axes[i]);
+        for (i in this.binds[AXIS]) {
+            if (Math.abs(this.gamepad.axes[i]) > this.deadzone) {
+                this.binds[AXIS][i](this.gamepad.axes[i]);
             }
         }
     }
