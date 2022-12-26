@@ -14,6 +14,8 @@ const Motor1E = new Gpio(18, {mode: Gpio.OUTPUT}); //Pin 12
 
 const Motor_ST = new Gpio(10, {mode: Gpio.OUTPUT}); //Pin 19
 
+const Brake_Motor = new Gpio(9, {mode: Gpio.OUTPUT}); //Pin 21
+
 let VEHICLE = {
   throttle_pct: 0,
   brake_pct: 0,
@@ -75,7 +77,11 @@ function scale (number, inMin, inMax, outMin, outMax) {
 
 
 function main(){
+  
   Motor_ST.servoWrite(Math.round(scale(VEHICLE.steering_ang, -1, 1, 900, 2100)) >> 0);
+
+  Brake_Motor.servoWrite(Math.round(scale(VEHICLE.brake_pct, 0, 100, 900, 2100)) >> 0);
+
   if(VEHICLE.throttle_pct>45){
     Motor1A.digitalWrite(1);
     Motor1B.digitalWrite(0);
