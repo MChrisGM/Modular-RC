@@ -87,11 +87,15 @@ class Pad {
             var pct = Math.round(val * 100);
             if (pressed) {
                 this.binds[BUTTON][i](pct);
+            }else{
+                this.binds[BUTTON][i](0);
             }
         }
         for (i in this.binds[AXIS]) {
             if (Math.abs(this.gamepad.axes[i]) > this.deadzone) {
                 this.binds[AXIS][i](this.gamepad.axes[i]);
+            }else{
+                this.binds[AXIS][i](0);
             }
         }
     }

@@ -80,7 +80,7 @@ function main(){
 
   Motor_ST.servoWrite(Math.round(scale(VEHICLE.steering_ang, -1, 1, 900, 2100)) >> 0);
 
-  Brake_Motor.servoWrite(Math.round(scale(VEHICLE.brake_pct, 0, 100, 500, 2400)) >> 0);
+  Brake_Motor.servoWrite(Math.round(scale(VEHICLE.brake_pct, 0, 100, 500, 2500)) >> 0);
 
   if(VEHICLE.throttle_pct>45){
     Motor1A.digitalWrite(1);

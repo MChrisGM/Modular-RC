@@ -102,5 +102,5 @@ window.onload = function () {
             GamePad.update(controllers[cont_select_el.value]);
             GamePad.runInputs();
         }
-    },100);
+    },10);
 }
